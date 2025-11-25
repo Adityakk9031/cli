@@ -2942,8 +2942,13 @@ type OrganizationProjectsResponseProjectsStatus string
 
 // OrganizationResponseV1 defines model for OrganizationResponseV1.
 type OrganizationResponseV1 struct {
+	// Id Deprecated: Use `slug` instead.
+	// Deprecated:
 	Id   string `json:"id"`
 	Name string `json:"name"`
+
+	// Slug Organization slug
+	Slug string `json:"slug"`
 }
 
 // PgsodiumConfigResponse defines model for PgsodiumConfigResponse.
@@ -2953,7 +2958,8 @@ type PgsodiumConfigResponse struct {
 
 // PostgresConfigResponse defines model for PostgresConfigResponse.
 type PostgresConfigResponse struct {
-	CheckpointTimeout             *int                                          `json:"checkpoint_timeout,omitempty"`
+	// CheckpointTimeout Default unit: s
+	CheckpointTimeout             *string                                       `json:"checkpoint_timeout,omitempty"`
 	EffectiveCacheSize            *string                                       `json:"effective_cache_size,omitempty"`
 	HotStandbyFeedback            *bool                                         `json:"hot_standby_feedback,omitempty"`
 	LogicalDecodingWorkMem        *string                                       `json:"logical_decoding_work_mem,omitempty"`
@@ -2972,12 +2978,16 @@ type PostgresConfigResponse struct {
 	MaxWorkerProcesses            *int                                          `json:"max_worker_processes,omitempty"`
 	SessionReplicationRole        *PostgresConfigResponseSessionReplicationRole `json:"session_replication_role,omitempty"`
 	SharedBuffers                 *string                                       `json:"shared_buffers,omitempty"`
-	StatementTimeout              *string                                       `json:"statement_timeout,omitempty"`
-	TrackActivityQuerySize        *string                                       `json:"track_activity_query_size,omitempty"`
-	TrackCommitTimestamp          *bool                                         `json:"track_commit_timestamp,omitempty"`
-	WalKeepSize                   *string                                       `json:"wal_keep_size,omitempty"`
-	WalSenderTimeout              *string                                       `json:"wal_sender_timeout,omitempty"`
-	WorkMem                       *string                                       `json:"work_mem,omitempty"`
+
+	// StatementTimeout Default unit: ms
+	StatementTimeout       *string `json:"statement_timeout,omitempty"`
+	TrackActivityQuerySize *string `json:"track_activity_query_size,omitempty"`
+	TrackCommitTimestamp   *bool   `json:"track_commit_timestamp,omitempty"`
+	WalKeepSize            *string `json:"wal_keep_size,omitempty"`
+
+	// WalSenderTimeout Default unit: ms
+	WalSenderTimeout *string `json:"wal_sender_timeout,omitempty"`
+	WorkMem          *string `json:"work_mem,omitempty"`
 }
 
 // PostgresConfigResponseSessionReplicationRole defines model for PostgresConfigResponse.SessionReplicationRole.
@@ -3653,7 +3663,8 @@ type UpdatePgsodiumConfigBody struct {
 
 // UpdatePostgresConfigBody defines model for UpdatePostgresConfigBody.
 type UpdatePostgresConfigBody struct {
-	CheckpointTimeout             *int                                            `json:"checkpoint_timeout,omitempty"`
+	// CheckpointTimeout Default unit: s
+	CheckpointTimeout             *string                                         `json:"checkpoint_timeout,omitempty"`
 	EffectiveCacheSize            *string                                         `json:"effective_cache_size,omitempty"`
 	HotStandbyFeedback            *bool                                           `json:"hot_standby_feedback,omitempty"`
 	LogicalDecodingWorkMem        *string                                         `json:"logical_decoding_work_mem,omitempty"`
@@ -3673,12 +3684,16 @@ type UpdatePostgresConfigBody struct {
 	RestartDatabase               *bool                                           `json:"restart_database,omitempty"`
 	SessionReplicationRole        *UpdatePostgresConfigBodySessionReplicationRole `json:"session_replication_role,omitempty"`
 	SharedBuffers                 *string                                         `json:"shared_buffers,omitempty"`
-	StatementTimeout              *string                                         `json:"statement_timeout,omitempty"`
-	TrackActivityQuerySize        *string                                         `json:"track_activity_query_size,omitempty"`
-	TrackCommitTimestamp          *bool                                           `json:"track_commit_timestamp,omitempty"`
-	WalKeepSize                   *string                                         `json:"wal_keep_size,omitempty"`
-	WalSenderTimeout              *string                                         `json:"wal_sender_timeout,omitempty"`
-	WorkMem                       *string                                         `json:"work_mem,omitempty"`
+
+	// StatementTimeout Default unit: ms
+	StatementTimeout       *string `json:"statement_timeout,omitempty"`
+	TrackActivityQuerySize *string `json:"track_activity_query_size,omitempty"`
+	TrackCommitTimestamp   *bool   `json:"track_commit_timestamp,omitempty"`
+	WalKeepSize            *string `json:"wal_keep_size,omitempty"`
+
+	// WalSenderTimeout Default unit: ms
+	WalSenderTimeout *string `json:"wal_sender_timeout,omitempty"`
+	WorkMem          *string `json:"work_mem,omitempty"`
 }
 
 // UpdatePostgresConfigBodySessionReplicationRole defines model for UpdatePostgresConfigBody.SessionReplicationRole.
@@ -3874,8 +3889,12 @@ type V1CreateProjectBody struct {
 	// Name Name of your project
 	Name string `json:"name"`
 
-	// OrganizationId Slug of your organization
-	OrganizationId string `json:"organization_id"`
+	// OrganizationId Deprecated: Use `organization_slug` instead.
+	// Deprecated:
+	OrganizationId *string `json:"organization_id,omitempty"`
+
+	// OrganizationSlug Organization slug
+	OrganizationSlug string `json:"organization_slug"`
 
 	// Plan Subscription Plan is now set on organization level and is ignored in this request
 	// Deprecated:
@@ -4135,14 +4154,22 @@ type V1ProjectResponse struct {
 	// CreatedAt Creation timestamp
 	CreatedAt string `json:"created_at"`
 
-	// Id Id of your project
+	// Id Deprecated: Use `ref` instead.
+	// Deprecated:
 	Id string `json:"id"`
 
 	// Name Name of your project
 	Name string `json:"name"`
 
-	// OrganizationId Slug of your organization
+	// OrganizationId Deprecated: Use `organization_slug` instead.
+	// Deprecated:
 	OrganizationId string `json:"organization_id"`
+
+	// OrganizationSlug Organization slug
+	OrganizationSlug string `json:"organization_slug"`
+
+	// Ref Project ref
+	Ref string `json:"ref"`
 
 	// Region Region of your project
 	Region string                  `json:"region"`
@@ -4170,14 +4197,22 @@ type V1ProjectWithDatabaseResponse struct {
 		Version string `json:"version"`
 	} `json:"database"`
 
-	// Id Id of your project
+	// Id Deprecated: Use `ref` instead.
+	// Deprecated:
 	Id string `json:"id"`
 
 	// Name Name of your project
 	Name string `json:"name"`
 
-	// OrganizationId Slug of your organization
+	// OrganizationId Deprecated: Use `organization_slug` instead.
+	// Deprecated:
 	OrganizationId string `json:"organization_id"`
+
+	// OrganizationSlug Organization slug
+	OrganizationSlug string `json:"organization_slug"`
+
+	// Ref Project ref
+	Ref string `json:"ref"`
 
 	// Region Region of your project
 	Region string                              `json:"region"`
@@ -4186,6 +4221,12 @@ type V1ProjectWithDatabaseResponse struct {
 
 // V1ProjectWithDatabaseResponseStatus defines model for V1ProjectWithDatabaseResponse.Status.
 type V1ProjectWithDatabaseResponseStatus string
+
+// V1ReadOnlyQueryBody defines model for V1ReadOnlyQueryBody.
+type V1ReadOnlyQueryBody struct {
+	Parameters *[]interface{} `json:"parameters,omitempty"`
+	Query      string         `json:"query"`
+}
 
 // V1RestorePitrBody defines model for V1RestorePitrBody.
 type V1RestorePitrBody struct {
@@ -4686,6 +4727,9 @@ type V1PatchAMigrationJSONRequestBody = V1PatchMigrationBody
 
 // V1RunAQueryJSONRequestBody defines body for V1RunAQuery for application/json ContentType.
 type V1RunAQueryJSONRequestBody = V1RunQueryBody
+
+// V1ReadOnlyQueryJSONRequestBody defines body for V1ReadOnlyQuery for application/json ContentType.
+type V1ReadOnlyQueryJSONRequestBody = V1ReadOnlyQueryBody
 
 // V1CreateAFunctionJSONRequestBody defines body for V1CreateAFunction for application/json ContentType.
 type V1CreateAFunctionJSONRequestBody = V1CreateFunctionBody
